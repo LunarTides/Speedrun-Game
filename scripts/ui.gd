@@ -10,3 +10,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	%FPS.text = "FPS: %d" % Performance.get_monitor(Performance.TIME_FPS)
 	%Health.text = "Health: %d" % GameManager.player.health
+	
+	%KatanaReticle.position = get_window().size / 2
+	%KatanaReticle.visible = GameManager.player.equipped_weapon and GameManager.player.equipped_weapon.name == "Katana"

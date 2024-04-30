@@ -15,6 +15,8 @@ func _ready() -> void:
 	hit.connect(func() -> void:
 		$HitParticles.restart()
 	)
+	
+	$MeshInstance3D.get_active_material(0).cull_mode = BaseMaterial3D.CULL_DISABLED
 
 
 func _physics_process(delta: float) -> void:
@@ -26,6 +28,10 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= gravity * delta
 	else:
 		velocity += (GameManager.player.position - position).normalized() * SPEED * delta
+	
+	if position.distance_to(GameManager.player.position) > 100:
+		velocity = (GameManager.player.position - position).normalized() * SPEED * 100 * delta
+		velocity.y = 0
 	
 	move_and_slide()
 

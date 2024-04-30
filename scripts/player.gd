@@ -12,6 +12,7 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var speed: float = STARTING_SPEED
 var extra_jumps: int = STARTING_EXTRA_JUMPS
 var is_moving: bool = false
+var is_slamming: bool = false
 var is_on_damage_cooldown: bool = false
 var can_be_damaged: bool = true
 var health: float = 100
@@ -31,9 +32,14 @@ func _physics_process(delta: float) -> void:
 			extra_jumps -= 1
 		
 		velocity.y = JUMP_VELOCITY
+		velocity.x *= 1.5
+		velocity.y *= 1.5
 	
 	if is_on_floor():
 		extra_jumps = STARTING_EXTRA_JUMPS
+		
+		if is_slamming:
+			speed = JUMP_VELOCITY * 5
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -49,6 +55,17 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 		velocity.z = 0
 	
+	if Input.is_action_just_pressed("slam"):
+		if is_on_floor():
+			# Convert horizontal to vertical.
+			velocity.y = abs(velocity.x) + abs(velocity.y)
+			velocity.x = 0
+			velocity.z = 0
+			speed = STARTING_SPEED
+		else:
+			velocity.y = -JUMP_VELOCITY * 10
+			is_slamming = true
+	
 	# If the player collides with a wall, reset their momentum.
 	if is_on_wall():
 		speed = STARTING_SPEED
@@ -59,6 +76,8 @@ func _physics_process(delta: float) -> void:
 	
 	velocity += extra_velocity
 	extra_velocity = Vector3.ZERO
+	
+	is_moving = abs(velocity.x) > 0 and abs(velocity.z) > 0
 	
 	move_and_slide()
 	
@@ -82,7 +101,7 @@ func _physics_process(delta: float) -> void:
 		new_enemy_target = new_enemy_target_collision.get_parent()
 	
 	if not new_enemy_target_collision or new_enemy_target != enemy_target:
-		if enemy_target:
+		if enemy_target and enemy_target:
 			enemy_target.unmark_as_target()
 			enemy_target = null
 	
@@ -91,8 +110,6 @@ func _physics_process(delta: float) -> void:
 	
 	if enemy_target:
 		enemy_target.mark_as_target()
-	
-	is_moving = velocity.x > 0 and velocity.z > 0
 
 
 func _unhandled_input(event: InputEvent) -> void:
