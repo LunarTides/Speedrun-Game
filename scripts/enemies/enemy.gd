@@ -41,7 +41,7 @@ func mark_as_target() -> void:
 	$MeshInstance3D.set_surface_override_material(0, ENEMY_TARGET_MATERIAL)
 	
 	target_indicator.show()
-	await get_tree().create_timer(1.0)
+	await get_tree().create_timer(1.0).timeout
 	target_indicator_animation_player.play(&"dance")
 
 

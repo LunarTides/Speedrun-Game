@@ -8,7 +8,7 @@ var color: float = 0
 func _process(delta: float) -> void:
 	#var particle_material: Material = Material.new()
 	#particle_material.albedo_color = Color.from_ok_hsl(delta, 100, 59)
-	color += 0.01
+	color += 0.5 * delta
 	
 	$GPUParticles3D.draw_pass_1.surface_get_material(0).albedo_color = Color.from_ok_hsl(color, 0.4, 0.4)
 	
