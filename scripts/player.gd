@@ -101,14 +101,14 @@ func _physics_process(delta: float) -> void:
 		new_enemy_target = new_enemy_target_collision.get_parent()
 	
 	if not new_enemy_target_collision or new_enemy_target != enemy_target:
-		if enemy_target and enemy_target:
+		if is_instance_valid(enemy_target):
 			enemy_target.unmark_as_target()
 			enemy_target = null
 	
 	if new_enemy_target:
 		enemy_target = new_enemy_target
 	
-	if enemy_target:
+	if is_instance_valid(enemy_target):
 		enemy_target.mark_as_target()
 
 

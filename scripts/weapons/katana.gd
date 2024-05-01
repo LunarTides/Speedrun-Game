@@ -35,7 +35,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not enemy:
 			return
 		
-		var old_can_be_damaged: bool = player.can_be_damaged
 		player.can_be_damaged = false
 		
 		var diff: Vector3 = Vector3(1000, 1000, 1000)
@@ -50,7 +49,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			await get_tree().physics_frame
 		
 		await get_tree().create_timer(0.5).timeout
-		player.can_be_damaged = old_can_be_damaged
+		player.can_be_damaged = true
 
 
 func _equip() -> void:
