@@ -19,6 +19,7 @@ var health: float = 100
 var equipped_weapon: Weapon
 var enemy_target: Enemy
 var extra_velocity: Vector3
+var slam_speed: float
 
 
 func _physics_process(delta: float) -> void:
@@ -32,14 +33,15 @@ func _physics_process(delta: float) -> void:
 			extra_jumps -= 1
 		
 		velocity.y = JUMP_VELOCITY
-		velocity.x *= 1.5
-		velocity.y *= 1.5
+		speed *= 1.05
 	
 	if is_on_floor():
 		extra_jumps = STARTING_EXTRA_JUMPS
 		
 		if is_slamming:
-			speed = JUMP_VELOCITY * 5
+			speed = max(speed, slam_speed)
+			slam_speed = 0
+			is_slamming = false
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -49,6 +51,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction.x * speed
 		velocity.z = direction.z * speed
 		speed += 10 * delta
+		speed *= 1 + (0.02 * delta)
 	else:
 		#velocity.x = move_toward(velocity.x, 0, speed)
 		#velocity.z = move_toward(velocity.z, 0, speed)
@@ -56,6 +59,8 @@ func _physics_process(delta: float) -> void:
 		velocity.z = 0
 	
 	if Input.is_action_just_pressed("slam"):
+		slam_speed = max(slam_speed, speed)
+		
 		if is_on_floor():
 			# Convert horizontal to vertical.
 			velocity.y = abs(velocity.x) + abs(velocity.y)
@@ -64,7 +69,7 @@ func _physics_process(delta: float) -> void:
 			speed = STARTING_SPEED
 		else:
 			velocity.y = -JUMP_VELOCITY * 10
-			is_slamming = true
+		is_slamming = true
 	
 	# If the player collides with a wall, reset their momentum.
 	if is_on_wall():
