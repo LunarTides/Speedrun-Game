@@ -4,11 +4,6 @@ extends Weapon
 var color: float = 0
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#var particle_material: Material = Material.new()
@@ -54,7 +49,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _equip() -> void:
 	show()
-	%AnimationTree.get("parameters/playback").travel(&"equip")
+	animation_tree.get("parameters/playback").travel(&"equip")
 
 
 func _unequip() -> void:
@@ -64,7 +59,7 @@ func _unequip() -> void:
 func _attack() -> void:
 	is_attacking = true
 	
-	var playback: AnimationNodeStateMachinePlayback = %AnimationTree.get("parameters/playback")
+	var playback: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
 	
 	playback.stop()
 	playback.start(&"attack")
@@ -72,10 +67,3 @@ func _attack() -> void:
 	await get_tree().create_timer(0.5).timeout
 	
 	is_attacking = false
-
-
-func _on_area_3d_body_entered(enemy: Enemy) -> void:
-	if not is_attacking:
-		return
-	
-	enemy.health -= damage

@@ -1,14 +1,16 @@
-[gd_scene load_steps=19 format=3 uid="uid://yfo0sq53dpj0"]
+[gd_scene load_steps=20 format=3 uid="uid://yfo0sq53dpj0"]
 
 [ext_resource type="Script" path="res://scripts/weapons/katana.gd" id="1_0j36f"]
+[ext_resource type="PackedScene" uid="uid://bdrtcsxmbda0o" path="res://scenes/weapons/weapon.tscn" id="1_tqhu0"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_4u88m"]
+[sub_resource type="BoxMesh" id="BoxMesh_fbw3r"]
 size = Vector3(0.1, 0.1, 3)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_set2v"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_0fe6x"]
 size = Vector3(0.1, 0.1, 3)
 
 [sub_resource type="Animation" id="Animation_r8lns"]
+resource_name = "RESET"
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -120,7 +122,7 @@ tracks/1/keys = {
 "values": [Vector3(0, 1.5708, 0), Vector3(0.0349066, 1.5708, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_yofgp"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hfnu7"]
 _data = {
 "RESET": SubResource("Animation_r8lns"),
 "attack": SubResource("Animation_xm67t"),
@@ -128,39 +130,39 @@ _data = {
 "idle": SubResource("Animation_gulgk")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_185aj"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n5fgt"]
 animation = &"attack"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1n2i2"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f33ah"]
 animation = &"equip"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6rt7h"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ynaxd"]
 animation = &"idle"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5j84j"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kstwk"]
 switch_mode = 2
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oe22l"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ytu0s"]
 switch_mode = 2
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_aojm3"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2lray"]
 switch_mode = 2
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_1hx1j"]
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_70nkw"]
 states/Start/position = Vector2(214, 100)
-states/attack/node = SubResource("AnimationNodeAnimation_185aj")
-states/attack/position = Vector2(509, 30)
-states/equip/node = SubResource("AnimationNodeAnimation_1n2i2")
-states/equip/position = Vector2(509, 100)
-states/idle/node = SubResource("AnimationNodeAnimation_6rt7h")
-states/idle/position = Vector2(688, 105)
-transitions = ["equip", "idle", SubResource("AnimationNodeStateMachineTransition_5j84j"), "idle", "End", SubResource("AnimationNodeStateMachineTransition_oe22l"), "attack", "idle", SubResource("AnimationNodeStateMachineTransition_aojm3")]
+states/attack/node = SubResource("AnimationNodeAnimation_n5fgt")
+states/attack/position = Vector2(440, 66)
+states/equip/node = SubResource("AnimationNodeAnimation_f33ah")
+states/equip/position = Vector2(431, 172)
+states/idle/node = SubResource("AnimationNodeAnimation_ynaxd")
+states/idle/position = Vector2(674, 113)
+transitions = ["attack", "idle", SubResource("AnimationNodeStateMachineTransition_kstwk"), "equip", "idle", SubResource("AnimationNodeStateMachineTransition_ytu0s"), "idle", "End", SubResource("AnimationNodeStateMachineTransition_2lray")]
 graph_offset = Vector2(-224, 18)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x14s6"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wl40n"]
 emission_shape = 3
 emission_box_extents = Vector3(0.1, 0.1, 1.5)
 angle_max = 150.7
@@ -172,39 +174,28 @@ attractor_interaction_enabled = false
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6wei3"]
 albedo_color = Color(0, 0.762179, 0.86544, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_gfs8g"]
+[sub_resource type="BoxMesh" id="BoxMesh_ycp16"]
 material = SubResource("StandardMaterial3D_6wei3")
 size = Vector3(0.05, 0.05, 0.05)
 
-[node name="Katana" type="Node3D"]
+[node name="Katana" instance=ExtResource("1_tqhu0")]
 script = ExtResource("1_0j36f")
-damage = 5.0
-metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_4u88m")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="0"]
+mesh = SubResource("BoxMesh_fbw3r")
 
-[node name="Area3D" type="Area3D" parent="."]
-collision_mask = 4
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyHurtHitbox" index="0"]
+shape = SubResource("BoxShape3D_0fe6x")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("BoxShape3D_set2v")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-unique_name_in_owner = true
+[node name="AnimationPlayer" parent="." index="2"]
 libraries = {
-"": SubResource("AnimationLibrary_yofgp")
+"": SubResource("AnimationLibrary_hfnu7")
 }
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
-unique_name_in_owner = true
-root_node = NodePath("%AnimationTree/..")
-tree_root = SubResource("AnimationNodeStateMachine_1hx1j")
-anim_player = NodePath("../AnimationPlayer")
+[node name="AnimationTree" parent="." index="3"]
+tree_root = SubResource("AnimationNodeStateMachine_70nkw")
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="4"]
 amount = 256
-process_material = SubResource("ParticleProcessMaterial_x14s6")
-draw_pass_1 = SubResource("BoxMesh_gfs8g")
-
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+process_material = SubResource("ParticleProcessMaterial_wl40n")
+draw_pass_1 = SubResource("BoxMesh_ycp16")
