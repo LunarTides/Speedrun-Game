@@ -26,6 +26,8 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
+		
+		GameManager.multiplier += max(0, speed / 300) * delta
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and (is_on_floor() or extra_jumps > 0):
@@ -97,7 +99,7 @@ func _physics_process(delta: float) -> void:
 			
 			if health <= 0:
 				# TODO: Add more here.
-				get_tree().reload_current_scene()
+				GameManager.restart()
 	
 	var new_enemy_target_collision: Node = %CameraRay.get_collider()
 	var new_enemy_target: Enemy

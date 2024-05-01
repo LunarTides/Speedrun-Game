@@ -29,6 +29,9 @@ signal hit
 func _ready() -> void:
 	hit.connect(func() -> void:
 		$HitParticles.restart()
+		
+		GameManager.add_score(1)
+		GameManager.multiplier += 0.1
 	)
 	
 	$MeshInstance3D.get_active_material(0).cull_mode = BaseMaterial3D.CULL_DISABLED
