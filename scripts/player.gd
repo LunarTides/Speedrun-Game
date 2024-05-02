@@ -70,7 +70,11 @@ func _physics_process(delta: float) -> void:
 			velocity.z = 0
 			speed = STARTING_SPEED
 		else:
-			velocity.y = -JUMP_VELOCITY * 10
+			# If the player is already slamming downwards, slam harder.
+			if velocity.y < 0:
+				velocity.y *= 2
+			else:
+				velocity.y = -JUMP_VELOCITY * 10
 		is_slamming = true
 	
 	# If the player collides with a wall, reset their momentum.
