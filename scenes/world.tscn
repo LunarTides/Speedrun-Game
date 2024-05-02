@@ -15,7 +15,6 @@ sky_material = SubResource("ProceduralSkyMaterial_gwkqt")
 background_mode = 2
 sky = SubResource("Sky_252kv")
 tonemap_mode = 2
-sdfgi_enabled = true
 glow_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_2gr4k"]
