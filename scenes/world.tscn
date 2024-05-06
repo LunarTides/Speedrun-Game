@@ -81,6 +81,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.255, 7, 1.44908)
 [node name="EnemySmall5" parent="Enemies" instance=ExtResource("2_ruk7m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.3602, 7, 1.44908)
 
+[node name="EnemySmall6" parent="Enemies" instance=ExtResource("2_ruk7m")]
+transform = Transform3D(0.491299, 0, 0.870991, 0, 1, 0, -0.870991, 0, 0.491299, 10.1186, 5.48577, -20.4394)
+
+[node name="EnemySmall7" parent="Enemies" instance=ExtResource("2_ruk7m")]
+transform = Transform3D(0.491299, 0, 0.870991, 0, 1, 0, -0.870991, 0, 0.491299, 22.1774, 5.48577, -53.9413)
+
+[node name="EnemySmall8" parent="Enemies" instance=ExtResource("2_ruk7m")]
+transform = Transform3D(0.491299, 0, 0.870991, 0, 1, 0, -0.870991, 0, 0.491299, 33.6308, 5.48577, -21.2471)
+
+[node name="EnemySmall9" parent="Enemies" instance=ExtResource("2_ruk7m")]
+transform = Transform3D(0.491299, 0, 0.870991, 0, 1, 0, -0.870991, 0, 0.491299, 12.1756, 5.48577, -33.3493)
+
+[node name="EnemySmall10" parent="Enemies" instance=ExtResource("2_ruk7m")]
+transform = Transform3D(0.491299, 0, 0.870991, 0, 1, 0, -0.870991, 0, 0.491299, -3.8482, 5.48577, -4.94176)
+
 [node name="InvisibleGround" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.828, 1, 0)
 collision_mask = 7

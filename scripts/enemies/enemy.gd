@@ -14,7 +14,6 @@ const ENEMY_TARGET_MATERIAL: Material = preload("res://scenes/enemies/enemy_targ
 		hit.emit()
 		
 		if health <= 0:
-			print(health)
 			queue_free()
 
 
