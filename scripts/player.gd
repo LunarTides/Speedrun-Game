@@ -27,7 +27,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		
-		GameManager.multiplier += max(0, speed / 300) * delta
+		#GameManager.multiplier += max(0, speed / 300) * delta
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and (is_on_floor() or extra_jumps > 0):
