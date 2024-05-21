@@ -11,21 +11,33 @@ const SENSITIVITY: float = 0.3
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var speed: float = STARTING_SPEED
 var extra_jumps: int = STARTING_EXTRA_JUMPS
+var is_jumping: bool = false
 var is_moving: bool = false
 var is_slamming: bool = false
 var is_on_damage_cooldown: bool = false
 var can_be_damaged: bool = true
-var health: float = 100
+var health: float = 100:
+	set(value):
+		# TODO: Add feedback when the player gets damaged.
+		
+		# Add/subtract score when the health is changed.
+		# This incentivites not being hit.
+		GameManager.add_score(value - health)
+		
+		health = value
 var equipped_weapon: Weapon
 var enemy_target: Enemy
 var extra_velocity: Vector3
 var slam_speed: float
+
+var _camera_bounce_tween: Tween
 
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
+		is_jumping = true
 		
 		#GameManager.multiplier += max(0, speed / 300) * delta
 
@@ -39,6 +51,20 @@ func _physics_process(delta: float) -> void:
 	
 	if is_on_floor():
 		extra_jumps = STARTING_EXTRA_JUMPS
+		
+		if is_jumping:
+			# Camera bounce
+			var old_position: float = %Camera.position.y
+			
+			if is_instance_valid(_camera_bounce_tween):
+				_camera_bounce_tween.kill()
+				%Camera.position.y = 0.52
+			
+			_camera_bounce_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+			_camera_bounce_tween.tween_property(%Camera, "position:y", %Camera.position.y - 1, 0.4)
+			_camera_bounce_tween.tween_property(%Camera, "position:y", old_position, 0.4)
+			
+			is_jumping = false
 		
 		if is_slamming:
 			speed = max(speed, slam_speed)

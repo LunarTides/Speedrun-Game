@@ -34,7 +34,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		var diff: Vector3 = Vector3(1000, 1000, 1000)
 		
-		while ((diff / 20).length() > 5):
+		while ((diff / 20).length() > 4):
 			diff = (enemy.global_position - player.global_position) * 20
 			
 			player.extra_velocity.x += diff.x

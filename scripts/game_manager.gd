@@ -2,7 +2,9 @@ extends Node
 
 
 var high_score: float = 0
-var score: float = 0
+var score: float = 0:
+	set(value):
+		score = max(value, 0)
 var multiplier: float = 1:
 	set(value):
 		multiplier = max(1, value)
