@@ -54,11 +54,11 @@ func _physics_process(delta: float) -> void:
 		
 		if is_jumping:
 			# Camera bounce
-			var old_position: float = %Camera.position.y
-			
 			if is_instance_valid(_camera_bounce_tween):
 				_camera_bounce_tween.kill()
 				%Camera.position.y = 0.52
+			
+			var old_position: float = %Camera.position.y
 			
 			_camera_bounce_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 			_camera_bounce_tween.tween_property(%Camera, "position:y", %Camera.position.y - 1, 0.4)
@@ -97,8 +97,8 @@ func _physics_process(delta: float) -> void:
 			speed = STARTING_SPEED
 		else:
 			# If the player is already slamming downwards, slam harder.
-			if velocity.y < 0:
-				velocity.y *= 2
+			if is_slamming:
+				velocity.y *= 2 * 1 if velocity.y < 0 else -1
 			else:
 				velocity.y = -JUMP_VELOCITY * 10
 		is_slamming = true

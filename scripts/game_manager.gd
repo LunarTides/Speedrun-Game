@@ -41,7 +41,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func add_score(value: float) -> void:
-	score += value * multiplier
+	if value > 0:
+		score += value * multiplier
+	else:
+		# Don't use the multiplier when subtracting score.
+		score += value
+	
 	high_score = max(high_score, score)
 
 
