@@ -179,6 +179,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		
 		equipped_weapon._attack()
+	elif event.is_action_pressed("throw_rope"):
+		%Rope.target(enemy_target)
 
 
 func _on_cancel_momentum_timer_timeout() -> void:

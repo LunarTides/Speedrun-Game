@@ -37,6 +37,9 @@ func _ready() -> void:
 
 
 func mark_as_target() -> void:
+	if not is_inside_tree():
+		return
+	
 	$MeshInstance3D.set_surface_override_material(0, ENEMY_TARGET_MATERIAL)
 	
 	target_indicator.show()

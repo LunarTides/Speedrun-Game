@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvdfwmpvqi480"]
+[gd_scene load_steps=6 format=3 uid="uid://bvdfwmpvqi480"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_gly4n"]
 [ext_resource type="PackedScene" uid="uid://yfo0sq53dpj0" path="res://scenes/weapons/katana.tscn" id="2_gtmbk"]
+[ext_resource type="Script" path="res://scripts/rope.gd" id="3_keekn"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_80aj8"]
 
@@ -34,6 +35,10 @@ target_position = Vector3(0, -100, 0)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="Rope" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_keekn")
 
 [node name="CancelMomentumTimer" type="Timer" parent="."]
 unique_name_in_owner = true

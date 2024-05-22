@@ -4,9 +4,16 @@ extends Enemy
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 #var last_tried_jump_velocity: float = 0
 
+var paused: bool = false
 
 func _physics_process(delta: float) -> void:
 	if not GameManager.player:
+		return
+	
+	if OS.is_debug_build() and Input.is_action_just_pressed("debug_stop"):
+		paused = not paused
+	
+	if paused:
 		return
 	
 	# Add the gravity.
