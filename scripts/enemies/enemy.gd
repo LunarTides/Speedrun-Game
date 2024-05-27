@@ -20,6 +20,9 @@ const ENEMY_TARGET_MATERIAL: Material = preload("res://scenes/enemies/enemy_targ
 @onready var target_indicator: MeshInstance3D = $TargetIndicator
 @onready var target_indicator_animation_player: AnimationPlayer = $TargetIndicator/AnimationPlayer
 
+var paused: bool = false
+var bound: bool = false
+var antigrav: bool = false
 
 signal hit
 

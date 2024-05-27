@@ -6,6 +6,8 @@ var target_1: Enemy
 var target_2: Enemy
 var connected_num: int = 0
 
+var antigrav: bool = false
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -24,6 +26,17 @@ func _process(delta: float) -> void:
 		target_2.velocity += (target_1.global_position - target_2.global_position) * delta * 15
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("rope_antigrav"):
+		# Play fancy sfx and vfx
+		antigrav = not antigrav
+		
+		if target_1:
+			target_1.antigrav = antigrav
+		if target_2:
+			target_2.antigrav = antigrav
+
+
 func target(enemy: Enemy) -> void:
 	if not is_instance_valid(enemy) and connected_num != 2:
 		return
@@ -33,6 +46,10 @@ func target(enemy: Enemy) -> void:
 		return
 	
 	show()
+	
+	if enemy:
+		enemy.bound = true
+		enemy.antigrav = antigrav
 	
 	connected_num += 1
 	
@@ -47,6 +64,12 @@ func target(enemy: Enemy) -> void:
 func stop() -> void:
 	hide()
 	connected_num = 0
+	if target_1:
+		target_1.bound = false
+		target_1.antigrav = false
+	if target_2:
+		target_2.bound = false
+		target_2.antigrav = false
 	target_1 = null
 	target_2 = null
 
