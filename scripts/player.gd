@@ -14,6 +14,8 @@ var extra_jumps: int = STARTING_EXTRA_JUMPS
 var is_jumping: bool = false
 var is_moving: bool = false
 var is_slamming: bool = false
+var is_air_slamming: bool = false
+var is_ground_slamming: bool = false
 var is_on_damage_cooldown: bool = false
 var can_be_damaged: bool = true
 var health: float = 100:
@@ -70,6 +72,8 @@ func _physics_process(delta: float) -> void:
 			speed = max(speed, slam_speed)
 			slam_speed = 0
 			is_slamming = false
+			is_air_slamming = false
+			is_ground_slamming = false
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -91,16 +95,21 @@ func _physics_process(delta: float) -> void:
 		
 		if is_on_floor():
 			# Convert horizontal to vertical.
-			velocity.y = abs(velocity.x) + abs(velocity.y)
+			velocity.y = (abs(velocity.x) + abs(velocity.z)) / 2
 			velocity.x = 0
 			velocity.z = 0
 			speed = STARTING_SPEED
+			
+			is_ground_slamming = true
 		else:
 			# If the player is already slamming downwards, slam harder.
-			if is_slamming:
+			if is_air_slamming:
 				velocity.y *= 2 * 1 if velocity.y < 0 else -1
 			else:
 				velocity.y = -JUMP_VELOCITY * 10
+			
+			is_air_slamming = true
+		
 		is_slamming = true
 	
 	# If the player collides with a wall, reset their momentum.
