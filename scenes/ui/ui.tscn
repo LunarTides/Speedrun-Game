@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://b23h8bhbcb0i0"]
 
-[ext_resource type="Script" path="res://scripts/ui.gd" id="1_fymde"]
+[ext_resource type="Script" path="res://scripts/ui/ui.gd" id="1_fymde"]
 [ext_resource type="Texture2D" uid="uid://cp5myjafi70mr" path="res://assets/sprites/reticle.png" id="2_mko72"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oca15"]

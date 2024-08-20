@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://2ycghs53pu2"]
+
+[ext_resource type="Script" path="res://scripts/ui/settings_menu.gd" id="1_tc63s"]
+[ext_resource type="Script" path="res://scripts/ui/keybind_button.gd" id="2_amu5j"]
+
+[node name="SettingsMenu" type="TabContainer"]
+process_mode = 3
+z_index = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+current_tab = 0
+script = ExtResource("1_tc63s")
+
+[node name="Keybinds" type="CenterContainer" parent="."]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Keybinds"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HSplitContainer" parent="Keybinds/VBoxContainer"]
+layout_mode = 2
+split_offset = 1000
+dragger_visibility = 1
+
+[node name="Label" type="Label" parent="Keybinds/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "MoveLeft"
+
+[node name="KeybindButton" type="Button" parent="Keybinds/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+text = "A"
+script = ExtResource("2_amu5j")
+action = &"jump"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Keybinds/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Keybinds/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "MoveRight"
+
+[node name="KeybindButton" type="Button" parent="Keybinds/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+toggle_mode = true
+text = "D"
+script = ExtResource("2_amu5j")
+action = &"jump"
+
+[connection signal="pressed" from="Keybinds/VBoxContainer/HBoxContainer/KeybindButton" to="Keybinds/VBoxContainer/HBoxContainer/KeybindButton" method="_on_pressed"]
+[connection signal="toggled" from="Keybinds/VBoxContainer/HBoxContainer/KeybindButton" to="Keybinds/VBoxContainer/HBoxContainer/KeybindButton" method="_on_toggled"]
+[connection signal="pressed" from="Keybinds/VBoxContainer/HBoxContainer2/KeybindButton" to="Keybinds/VBoxContainer/HBoxContainer2/KeybindButton" method="_on_pressed"]
+[connection signal="toggled" from="Keybinds/VBoxContainer/HBoxContainer2/KeybindButton" to="Keybinds/VBoxContainer/HBoxContainer2/KeybindButton" method="_on_toggled"]
