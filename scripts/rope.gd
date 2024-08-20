@@ -12,7 +12,8 @@ var antigrav: bool = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if not is_instance_valid(target_1) or (connected_num == 2 and not is_instance_valid(target_2)):
-		stop()
+		if visible:
+			stop()
 		return
 	
 	if connected_num == 1:
@@ -47,7 +48,14 @@ func target(enemy: Enemy) -> void:
 	
 	show()
 	
+	if connected_num == 2:
+		stop()
+		
+		if not enemy:
+			return
+	
 	if enemy:
+		show()
 		enemy.bound = true
 		enemy.antigrav = antigrav
 	
@@ -57,8 +65,6 @@ func target(enemy: Enemy) -> void:
 		target_1 = enemy
 	elif connected_num == 2:
 		target_2 = enemy
-	else:
-		stop()
 
 
 func stop() -> void:
